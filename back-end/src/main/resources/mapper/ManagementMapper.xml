@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandweaver.maxsec.mapper.ManagementMapper">
+
+    <resultMap id="BaseResultMap" type="com.bandweaver.maxsec.entity.Management">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="father_id" jdbcType="INTEGER" property="fatherId"/>
+        <result column="leaf" jdbcType="BOOLEAN" property="leaf"/>
+        <result column="map" jdbcType="VARCHAR" property="map"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, position, level, father_id, leaf, map, create_time
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from management
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from management
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from management
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.bandweaver.maxsec.entity.Management">
+        insert into management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="fatherId != null">
+                father_id,
+            </if>
+            <if test="leaf != null">
+                leaf,
+            </if>
+            <if test="map != null">
+                map,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="fatherId != null">
+                #{fatherId,jdbcType=INTEGER},
+            </if>
+            <if test="leaf != null">
+                #{leaf,jdbcType=BOOLEAN},
+            </if>
+            <if test="map != null">
+                #{map,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.bandweaver.maxsec.entity.Management">
+        update management
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="fatherId != null">
+                father_id = #{fatherId,jdbcType=INTEGER},
+            </if>
+            <if test="leaf != null">
+                leaf = #{leaf,jdbcType=BOOLEAN},
+            </if>
+            <if test="map != null">
+                map = #{map,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

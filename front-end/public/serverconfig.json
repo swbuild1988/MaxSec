@@ -1,0 +1,16 @@
+{
+    "ApiUrl": "http://192.168.6.122:8888",
+    "VisualizedParams": {
+        "GrouthTrend": {
+            "ShowList": ["视频", "高后果视频", "周界入侵", "消防手报"]
+        }
+    },
+    "MQParams": {
+        "address": "ws://192.168.6.122:15674/ws",
+        "login": "admin",
+        "passcode": "admin",
+        "connectType": "exchange",
+        "connectName": "fanout.exchange.front"
+    },
+    "TestData": true
+}

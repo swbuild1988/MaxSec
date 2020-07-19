@@ -1,0 +1,2 @@
+mvn install:install-file -Dfile=jna.jar -DgroupId=com.sun.jna -DartifactId=jna -Dversion=1.0.1 -Dpackaging=jar
+-- mvn install:install-file -Dfile=examples.jar -DgroupId=com.sun.jna.examples -DartifactId=examples -Dversion=1.0.1 -Dpackaging=jar

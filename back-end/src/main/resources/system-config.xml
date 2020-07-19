@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SysParas>
+    <VideoAlarmService>
+        <actived>true</actived>
+        <intervalTime>3</intervalTime>
+    </VideoAlarmService>
+    <AlarmLinkage>
+        <actived>true</actived>
+        <intervalTime>3</intervalTime>
+        <directory>\AlarmImage</directory>
+        <catPic>true</catPic>
+        <catPicCount>3</catPicCount>
+        <catPicInterval>1</catPicInterval>
+        <record>true</record>
+        <recordAheadTime>5</recordAheadTime>
+        <recordTime>15</recordTime>
+        <recordWaitTime>120</recordWaitTime>
+        <upgradeWaitTime>10</upgradeWaitTime>
+    </AlarmLinkage>
+    <Intercom>
+        <directory>\IntercomImage</directory>
+    </Intercom>
+</SysParas>

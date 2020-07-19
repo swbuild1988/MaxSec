@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandweaver.maxsec.mapper.AlarmMapper">
+
+    <resultMap id="BaseResultMap" type="com.bandweaver.maxsec.entity.Alarm">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="alarmtype_id" jdbcType="INTEGER" property="alarmTypeId"/>
+        <result column="obj_id" jdbcType="INTEGER" property="objId"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="cleaned" jdbcType="BOOLEAN" property="cleaned"/>
+        <result column="cleaned_time" jdbcType="TIMESTAMP" property="cleanedTime"/>
+        <result column="source" jdbcType="VARCHAR" property="source"/>
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.bandweaver.maxsec.dto.AlarmDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="alarmtype_id" jdbcType="INTEGER" property="alarmTypeId"/>
+        <result column="obj_id" jdbcType="INTEGER" property="objId"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="cleaned" jdbcType="BOOLEAN" property="cleaned"/>
+        <result column="cleaned_time" jdbcType="TIMESTAMP" property="cleanedTime"/>
+        <result column="source" jdbcType="VARCHAR" property="source"/>
+
+        <result column="obj_name" jdbcType="VARCHAR" property="objectName"/>
+        <result column="station_id" jdbcType="INTEGER" property="stationId"/>
+        <result column="station_name" jdbcType="VARCHAR" property="stationName"/>
+        <association property="alarmType" javaType="com.bandweaver.maxsec.entity.AlarmType" column="alarmtype_id"
+                     select="com.bandweaver.maxsec.mapper.AlarmTypeMapper.selectByPrimaryKey" fetchType="lazy">
+        </association>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select *
+        from alarm
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from alarm
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from alarm
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="clean">
+        update alarm
+        set cleaned=1,cleaned_time=#{time}
+        where id =#{id}
+    </update>
+
+    <select id="selectUncleaned" resultMap="BaseResultMap">
+        select *
+        from alarm
+        where obj_id = #{objId} and alarmtype_id=#{alarmTypeId} and source=#{source} and cleaned=0
+    </select>
+
+    <insert id="insert" parameterType="com.bandweaver.maxsec.entity.Alarm" useGeneratedKeys="true" keyProperty="id">
+        insert into alarm
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null">
+                time,
+            </if>
+            <if test="alarmTypeId != null">
+                alarmtype_id,
+            </if>
+            <if test="objId != null">
+                obj_id,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="cleaned != null">
+                cleaned,
+            </if>
+            <if test="cleanedTime != null">
+                cleaned_time,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alarmTypeId != null">
+                #{alarmTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="objId != null">
+                #{objId,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="cleaned != null">
+                #{cleaned,jdbcType=BOOLEAN},
+            </if>
+            <if test="cleanedTime != null">
+                #{cleanedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.bandweaver.maxsec.entity.Alarm">
+        update alarm
+        <set>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="alarmTypeId != null">
+                alarmtype_id = #{alarmTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="objId != null">
+                obj_id = #{objId,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="cleaned != null">
+                cleaned = #{cleaned,jdbcType=BOOLEAN},
+            </if>
+            <if test="cleanedTime != null">
+                cleaned_time = #{cleanedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="source != null">
+                source = #{description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getCountByCondition" resultType="java.lang.Integer">
+        select count(*) from alarm a
+        left join alarmType b on a.alarmtype_id = b.id
+        left join measobject c on a.obj_id = c.id
+        <where>
+            <if test="objId != null">
+                and a.obj_id = #{objId}
+            </if>
+            <if test="stationId != null">
+                and c.station_id = #{stationId}
+            </if>
+            <if test="type != null">
+                and b.object_type = #{type}
+            </if>
+            <if test="level != null">
+                and a.level = #{level}
+            </if>
+            <if test="cleaned != null">
+                and a.cleaned = #{cleaned}
+            </if>
+            <if test="startTime != null">
+                and time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and time &lt;= #{endTime}
+            </if>
+            <if test="stationIds != null and stationIds.size() > 0">
+                and c.station_id in
+                <foreach collection="stationIds" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getAlarmsByCondition" resultMap="DtoResultMap">
+        select a.*, c.name as obj_name, d.name as station_name, d.id as station_id
+        from alarm a
+        left join alarmType b on a.alarmtype_id = b.id
+        left join measobject c on a.obj_id = c.id
+        left join station d on c.station_id = d.id
+        <where>
+            <if test="objId != null">
+                and a.obj_id = #{objId}
+            </if>
+            <if test="stationId != null">
+                and c.station_id = #{stationId}
+            </if>
+            <if test="type != null">
+                and b.object_type = #{type}
+            </if>
+            <if test="level != null">
+                and a.level = #{level}
+            </if>
+            <if test="cleaned != null">
+                and a.cleaned = #{cleaned}
+            </if>
+            <if test="startTime != null">
+                and time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and time &lt;= #{endTime}
+            </if>
+            <if test="stationIds != null and stationIds.size() > 0">
+                and c.station_id in
+                <foreach collection="stationIds" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        order by time desc
+    </select>
+
+</mapper>

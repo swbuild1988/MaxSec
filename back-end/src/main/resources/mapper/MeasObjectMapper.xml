@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandweaver.maxsec.mapper.MeasObjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.bandweaver.maxsec.entity.MeasObject">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="station_id" jdbcType="INTEGER" property="stationId"/>
+        <result column="object_type" jdbcType="INTEGER" property="objectType"/>
+        <result column="data_type" jdbcType="INTEGER" property="dataType"/>
+        <result column="equipment_sn" jdbcType="VARCHAR" property="equipmentSn"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="actived" jdbcType="BOOLEAN" property="actived"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, station_id, object_type, data_type, equipment_sn, create_time,actived
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from measobject
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from measobject
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from measobject
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.bandweaver.maxsec.entity.MeasObject">
+        insert into measobject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="stationId != null">
+                station_id,
+            </if>
+            <if test="objectType != null">
+                object_type,
+            </if>
+            <if test="dataType != null">
+                data_type,
+            </if>
+            <if test="equipmentSn != null">
+                equipment_sn,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="actived != null">
+                actived,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="objectType != null">
+                #{objectType,jdbcType=INTEGER},
+            </if>
+            <if test="dataType != null">
+                #{dataType,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentSn != null">
+                #{equipmentSn,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actived != null">
+                #{actived,jdbcType=BOOLEAN},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.bandweaver.maxsec.entity.MeasObject">
+        update measobject
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                station_id = #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="objectType != null">
+                object_type = #{objectType,jdbcType=INTEGER},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentSn != null">
+                equipment_sn = #{equipmentSn,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actived != null">
+                actived = #{actived,jdbcType=BOOLEAN},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from measobject a
+        <where>
+            <if test="stationId != null">
+                and a.station_id = #{stationId}
+            </if>
+            <if test="objectType != null">
+                and a.object_type = #{objectType}
+            </if>
+            <if test="dataType != null">
+                and a.data_type = #{dataType}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandweaver.maxsec.mapper.VideoGroupMapper">
+
+    <resultMap id="BaseResultMap" type="com.bandweaver.maxsec.entity.VideoGroup">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="station_id" jdbcType="INTEGER" property="stationId"/>
+        <result column="videos" jdbcType="VARCHAR" property="videos"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, station_id, videos, create_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from videogroup a
+        where a.id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from videogroup
+    </select>
+
+    <select id="selectListByStation" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from videogroup a
+        where a.station_id = #{stationId}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from  videogroup
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.bandweaver.maxsec.entity.VideoServer">
+        insert into videogroup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="stationId != null">
+                station_id,
+            </if>
+            <if test="videos != null">
+                videos,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="videos != null">
+                #{videos,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.bandweaver.maxsec.entity.VideoServer">
+        update videogroup
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                station_id = #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="videos != null">
+                videos = #{videos,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

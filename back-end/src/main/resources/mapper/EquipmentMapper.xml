@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bandweaver.maxsec.mapper.EquipmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.bandweaver.maxsec.entity.Equipment">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="station_id" jdbcType="INTEGER" property="stationId"/>
+        <result column="equipment_type" jdbcType="INTEGER" property="equipmentType"/>
+        <result column="equipment_state" jdbcType="INTEGER" property="equipmentState"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.bandweaver.maxsec.dto.EquipmentDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="station_id" jdbcType="INTEGER" property="stationId"/>
+        <result column="station_name" jdbcType="VARCHAR" property="stationName"/>
+        <result column="equipment_type" jdbcType="INTEGER" property="equipmentType"/>
+        <result column="equipment_state" jdbcType="INTEGER" property="equipmentState"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, sn, station_id, equipment_type, equipment_state, create_time
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from equipment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from equipment
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from equipment
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.bandweaver.maxsec.entity.Equipment">
+        insert into equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sn != null">
+                sn,
+            </if>
+            <if test="stationId != null">
+                station_id,
+            </if>
+            <if test="equipmentType != null">
+                equipment_type,
+            </if>
+            <if test="equipmentState != null">
+                equipment_state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sn != null">
+                #{sn,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentType != null">
+                #{equipmentType,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentState != null">
+                #{equipmentState,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.bandweaver.maxsec.entity.Equipment">
+        update equipment
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sn != null">
+                sn = #{sn,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null">
+                station_id = #{stationId,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentType != null">
+                equipment_type = #{equipmentType,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentState != null">
+                equipment_state = #{equipmentState,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getCountByCondition" resultType="java.lang.Integer">
+        select count(*) from equipment a
+        <where>
+            <if test="stationId != null">
+                and a.station_id = #{stationId}
+            </if>
+            <if test="equipmentType != null">
+                and a.equipment_type = #{equipmentType}
+            </if>
+            <if test="equipmentState != null">
+                and a.equipment_state = #{equipmentState}
+            </if>
+            <if test="stationIds != null and stationIds.size() > 0">
+                and a.station_id in
+                <foreach collection="stationIds" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getPageListByCondition" resultMap="DtoResultMap">
+        select
+        a.*, b.name as station_name
+        from equipment a
+        left join station b on a.station_id = b.id
+        <where>
+            <if test="stationId != null">
+                and a.station_id = #{stationId}
+            </if>
+            <if test="equipmentType != null">
+                and a.equipment_type = #{equipmentType}
+            </if>
+            <if test="equipmentState != null">
+                and a.equipment_state = #{equipmentState}
+            </if>
+            <if test="stationIds != null and stationIds.size() > 0">
+                and a.station_id in
+                <foreach collection="stationIds" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>
