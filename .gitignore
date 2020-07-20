@@ -170,3 +170,7 @@ dist/
 #log
 *.log
 /.recommenders/
+
+# 海康的文件夹
+HikLib/
+**/HikLib/

@@ -29,6 +29,7 @@ export interface AlarmVo {
         pageSize ? : number,
         objId ? : number,
         type ? : number,
+        alarmType ? : number,
         level ? : number,
         cleaned ? : boolean | number,
         stationId ? : number,
