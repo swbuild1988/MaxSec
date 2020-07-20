@@ -171,6 +171,6 @@ dist/
 *.log
 /.recommenders/
 
-# 海康的文件夹
+# 海康
 HikLib/
 **/HikLib/
