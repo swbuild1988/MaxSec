@@ -219,6 +219,7 @@ public class AlarmController {
         if (object.containsKey("objId")) vo.setObjId(object.getInteger("objId"));
         if (object.containsKey("stationId")) vo.setStationId(object.getInteger("stationId"));
         if (object.containsKey("type")) vo.setType(object.getInteger("type"));
+        if (object.containsKey("alarmType")) vo.setAlarmType(object.getInteger("alarmType"));
         if (object.containsKey("level")) vo.setLevel(object.getInteger("level"));
         if (object.containsKey("cleaned")) vo.setCleaned(object.getBoolean("cleaned"));
         if (object.containsKey("startTime")) vo.setStartTime(object.getDate("startTime"));
@@ -236,13 +237,25 @@ public class AlarmController {
      * @return
      */
     @PostMapping("/alarm_count/condition")
-    public R getCountByCondition(@RequestBody JSONObject object) {
+    public R getCountByCondition(HttpServletRequest request, @RequestBody JSONObject object) {
 
         AlarmVo vo = new AlarmVo();
 
+        // 获取当前用户所在的部门
+        Integer userId = JwtUtil.getId(request);
+        User user = userService.selectByPrimaryKey(userId);
+        Integer managementId = user.getManagementId();
+        List<Station> stations = stationService.getStationsByManagement(managementId);
+        List<Integer> idList = new ArrayList<>();
+        for (Station station : stations) {
+            idList.add(station.getId());
+        }
+
+        if (idList.size() > 0) vo.setStationIds(idList);
         if (object.containsKey("objId")) vo.setStationId(object.getInteger("objId"));
         if (object.containsKey("stationId")) vo.setStationId(object.getInteger("stationId"));
         if (object.containsKey("type")) vo.setType(object.getInteger("type"));
+        if (object.containsKey("alarmType")) vo.setAlarmType(object.getInteger("alarmType"));
         if (object.containsKey("level")) vo.setLevel(object.getInteger("level"));
         if (object.containsKey("cleaned")) vo.setCleaned(object.getBoolean("cleaned"));
         if (object.containsKey("startTime")) vo.setStartTime(object.getDate("startTime"));
@@ -370,6 +383,7 @@ public class AlarmController {
 
     /**
      * 根据绝对路径获得图片
+     *
      * @param object
      * @param response
      * @throws IOException

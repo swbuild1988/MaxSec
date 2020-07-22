@@ -15,6 +15,8 @@ public class AlarmVo {
 
     private Integer type;
 
+    private Integer alarmType;
+
     private Integer level;
 
     private Boolean cleaned;

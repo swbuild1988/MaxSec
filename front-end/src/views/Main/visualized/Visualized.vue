@@ -6,7 +6,7 @@
                 <span class="week">{{ week }}</span>
                 <span class="time">{{ time }}</span>
             </div>
-            <div class="tit">广东管网粤西干线综合安防系统</div>
+            <div class="tit">广东管网粤西综合安防平台</div>
             <div class="tit_icon">
                 <span class="user_icon"></span>
                 <span class="logout_icon" @click="logout"></span>

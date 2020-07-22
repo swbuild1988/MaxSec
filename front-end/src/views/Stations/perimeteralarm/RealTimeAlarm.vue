@@ -50,10 +50,10 @@ export default class RealTimeAlarm extends Vue {
             if (res.data.code != 200) return;
 
             this.list = res.data.data.content;
-            var dataRes = getDate("-") + getTime();
+            // var dataRes = getDate("-") + getTime();
             this.config = {
                 data: this.list.map((item, index) => {
-                    return [dataRes, item.stationName, item.alarmType.name];
+                    return [new Date(item.timeStamp).format("MM-dd hh:mm"), item.stationName, item.alarmType.name];
                 }),
                 align: ["center", "center", "center"],
                 rowNum: 6,

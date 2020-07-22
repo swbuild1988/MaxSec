@@ -48,7 +48,7 @@
                 <h4>
                     人员管理
                 </h4>
-                <Table stripe :columns="columns" :data="cards" :loading="cardLoading">
+                <!-- <Table stripe :columns="columns" :data="cards" :loading="cardLoading"> -->
                 </Table>
             </div>
         </div>
@@ -211,10 +211,11 @@
                 if (res.data.code != 200) return;
 
                 this.alarms = res.data.data.content;
-                var dataRes = getDate("-") + getTime();
+                // var dataRes = getDate("-") + getTime();
+                
                 this.config = {
                     data: this.alarms.map((item, index) => {
-                        return [dataRes, item.stationName, item.alarmType.name];
+                        return [new Date(item.timeStamp).format("MM-dd hh:mm"), item.stationName, item.alarmType.name];
                     }),
                     align: ["center", "center", "center"],
                     rowNum: 8,

@@ -162,6 +162,9 @@
             <if test="type != null">
                 and b.object_type = #{type}
             </if>
+            <if test="alarmType != null">
+                and a.alarmtype_id = #{alarmType}
+            </if>
             <if test="level != null">
                 and a.level = #{level}
             </if>
@@ -198,6 +201,9 @@
             </if>
             <if test="type != null">
                 and b.object_type = #{type}
+            </if>
+            <if test="alarmType != null">
+                and a.alarmtype_id = #{alarmType}
             </if>
             <if test="level != null">
                 and a.level = #{level}

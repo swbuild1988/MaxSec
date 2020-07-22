@@ -187,7 +187,7 @@ export default class AlarmStatistics extends Vue {
                     data: pieData,
                     roseType: "radius",
                     label: {
-                        color: "rgba(255, 255, 255, 0.3)",
+                        color: "rgba(255, 255, 255, 1)",
                     },
                     labelLine: {
                         lineStyle: {

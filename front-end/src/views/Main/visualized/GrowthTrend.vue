@@ -31,7 +31,7 @@ import { getAlarmTrend } from "@/api/alarm";
 export default class GrowthTrend extends Vue {
     trendData: any[] = [];
     // 高度
-    growth_trend_line_height = 180;
+    growth_trend_line_height = 160;
 
     // 显示的趋势线条目
     showList: string[] = [];
@@ -284,9 +284,11 @@ export default class GrowthTrend extends Vue {
             title: {
                 text: name,
                 top: "middle",
-                left: "10px",
+                left: 10,
                 textStyle: {
-                    color: "#ADEFDC",
+                    color: "#fff",
+                    fontWeight: "400",
+                    fontSize: 12,
                 },
             },
             tooltip: {
@@ -295,7 +297,7 @@ export default class GrowthTrend extends Vue {
             grid: {
                 top: "5%",
                 bottom: "5%",
-                left: "30%",
+                left: "25%",
                 right: "5%",
             },
             xAxis: {
@@ -337,7 +339,8 @@ export default class GrowthTrend extends Vue {
                     type: "line",
                     symbol: "none",
                     lineStyle: {
-                        color: "#ADEFDC",
+                        // color: "#168AF6",
+                        color: "#2A65BE",
                     },
                 },
             ],

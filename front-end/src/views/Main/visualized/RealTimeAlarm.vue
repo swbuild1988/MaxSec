@@ -48,7 +48,7 @@ export default class RealTimeAlarm extends Vue {
 
             this.config = {
                 data: this.list.map((item, index) => {
-                    return [dataRes, item.stationName, item.alarmType.name];
+                    return [new Date(item.timeStamp).format("MM-dd hh:mm"), item.stationName, item.alarmType.name];
                 }),
                 align: ["center", "center", "center"],
                 rowNum: 6,

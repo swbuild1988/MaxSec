@@ -22,7 +22,7 @@ public class BasicApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        videoManagerService.start();
+//        videoManagerService.start();
         measObjectValService.selectAll();
     }
 }

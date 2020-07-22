@@ -16,9 +16,8 @@
                         v-for="(item, index) in measObjectVals"
                         :key="item.id"
                         class="dropdown_item"
-                        :class="{ active: index == 0 }"
                     >
-                        <span class="shield_big"></span>
+                        <!-- <span class="shield_big"></span> -->
                         {{ item.name }}
                         <span
                             class="fortification_icon"

@@ -32,11 +32,11 @@
             </div>
             <div class="fire_alarm_data">
                 <h4>火灾告警</h4>
-                <ul>
+                <!-- <ul>
                     <li v-for="item in fireAlarmData" :key="item.id">
                         {{ item.name }}
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
         <div class="col">

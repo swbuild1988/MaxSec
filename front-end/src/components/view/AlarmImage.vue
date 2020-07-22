@@ -1,6 +1,6 @@
 <template>
     <div class="AlarmImageClass">
-        <div v-if="imagePaths.length == 0">告警{{alarm.id}}无图片</div>
+        <div v-if="imagePaths.length == 0"></div>
         <image-from-path v-else-if="imagePaths.length == 1" :path="imagePaths[0]">
         </image-from-path>
         <el-carousel style="height:100%;width:100%;" v-else>
@@ -67,7 +67,10 @@
     .AlarmImageClass {
         height: 100%;
         width: 100%;
-        .el-carousel,.el-carousel--horizontal{
+        background-color: transparent;
+
+        .el-carousel,
+        .el-carousel--horizontal {
             .el-carousel__container {
                 height: 100% !important;
             }
